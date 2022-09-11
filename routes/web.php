@@ -22,7 +22,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/results/{query}', function ($query) {
+Route::get('/results', function () {
     // try {
     //     $formattedParent = $translationServiceClient->locationName(env("GOOGLE_CLOUD_PROJECT"), 'global');
     //     $sourceLanguageCode = '';
@@ -41,12 +41,13 @@ Route::get('/results/{query}', function ($query) {
     // } finally {
     //     $translationServiceClient->close();
     // }
-    
+    $yo = ["sup"];
+    $yo = [Request('query')];
 
-$values = Promise\wait(parallelMap(['en', 'fr', 'cs'], function ($languageCode) {
+$values = Promise\wait(parallelMap(['en', 'fr', 'cs'], function ($languageCode) use ($yo) {
     // \sleep($time); // a blocking function call, might also do blocking I/O here
     $translationClient = new TranslationServiceClient();
-    $content = ['one two four'];
+    $content = $yo;
     $targetLanguage = $languageCode;
     $response = $translationClient->translateText(
         $content,
