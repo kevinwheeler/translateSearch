@@ -27,15 +27,14 @@
         <script async src="https://cse.google.com/cse.js?cx=c6e7ebcdec9ef45cb"></script>
     </head>
     <body>
-      <?php echo($query) ?>
     <script>
       const myInitializationCallback = function() {
         console.log("z");
         const doTheThing = function() {
-          google.search.cse.element.render({div: "kmw1", tag: "searchresults-only", gname: "kmw1"});
-          google.search.cse.element.render({div: "kmw2", tag: "searchresults-only", gname: "kmw2"});
-          google.search.cse.element.getElement('kmw1').execute("pandas");
-          google.search.cse.element.getElement('kmw2').execute("grizzlies");
+          @foreach($translations as $translation)
+            google.search.cse.element.render({div: "gResults{{$loop->iteration}}", tag: "searchresults-only", gname: "gname{{$loop->iteration}}"});
+            google.search.cse.element.getElement('gname{{$loop->iteration}}').execute("{{$translation}}");
+          @endforeach
         }
         if (document.readyState == 'complete') {
           // Document is ready when Search Element is initialized.
@@ -75,9 +74,9 @@
       };
 
     </script>
-    <div id="kmw1" class="gcse-searchresults-only" data-gname="kmw1" data-defaultToImageSearch="true"  data-enableImageSearch="true" ></div>
-
-    <div id="kmw2" class="gcse-searchresults-only" data-gname="kmw2" data-defaultToImageSearch="true"  data-enableImageSearch="true" ></div>
+    @foreach($translations as $translation)
+      <div id="gResults{{$loop->iteration}}" class="gcse-searchresults-only" data-gname="gname{{$loop->iteration}}" data-defaultToImageSearch="true"  data-enableImageSearch="true" ></div>
+    @endforeach
     <script>
     </script>
     </body>

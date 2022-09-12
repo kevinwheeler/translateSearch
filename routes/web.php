@@ -23,28 +23,10 @@ Route::get('/', function () {
 });
 
 Route::get('/results', function () {
-    // try {
-    //     $formattedParent = $translationServiceClient->locationName(env("GOOGLE_CLOUD_PROJECT"), 'global');
-    //     $sourceLanguageCode = '';
-    //     $targetLanguageCodes = [en, fr, cs];
-    //     $inputConfigs = [];
-    //     $outputConfig = new OutputConfig();
-    //     $operationResponse = $translationServiceClient->batchTranslateText($formattedParent, $sourceLanguageCode, $targetLanguageCodes, $inputConfigs, $outputConfig);
-    //     $operationResponse->pollUntilComplete();
-    //     if ($operationResponse->operationSucceeded()) {
-    //         $result = $operationResponse->getResult();
-    //         // doSomethingWith($result)
-    //     } else {
-    //         $error = $operationResponse->getError();
-    //         // handleError($error)
-    //     }
-    // } finally {
-    //     $translationServiceClient->close();
-    // }
     $yo = ["sup"];
     $yo = [Request('query')];
 
-$values = Promise\wait(parallelMap(['en', 'fr', 'cs'], function ($languageCode) use ($yo) {
+$translations = Promise\wait(parallelMap(['en', 'fr', 'cs'], function ($languageCode) use ($yo) {
     // \sleep($time); // a blocking function call, might also do blocking I/O here
     $translationClient = new TranslationServiceClient();
     $content = $yo;
@@ -67,20 +49,7 @@ $values = Promise\wait(parallelMap(['en', 'fr', 'cs'], function ($languageCode) 
     return $translationOutput;
 }));
     
-
-    
-    // $translationServiceClient = new TranslationServiceClient();
-    // try {
-    //     $contents = [];
-    //     $targetLanguageCode = '';
-    //     $formattedParent = $translationServiceClient->locationName('[PROJECT]', '[LOCATION]');
-    //     $response = $translationServiceClient->translateText($contents, $targetLanguageCode, $formattedParent);
-    // } finally {
-    //     $translationServiceClient->close();
-    // }
-
-
     return view('results', [
-        'query' => implode(" ", $values)
+        'translations' => $translations
     ]);
 });
