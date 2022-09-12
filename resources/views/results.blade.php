@@ -31,9 +31,12 @@
       const myInitializationCallback = function() {
         console.log("z");
         const doTheThing = function() {
+          var el;
           @foreach($translations as $translation)
-            google.search.cse.element.render({div: "gResults{{$loop->iteration}}", tag: "searchresults-only", gname: "gname{{$loop->iteration}}"});
-            google.search.cse.element.getElement('gname{{$loop->iteration}}').execute("{{$translation}}");
+            google.search.cse.element.render({div: "gResults{{$loop->iteration}}", defaultToImageSearch: true, defaulttoimagesearch: true, tag: "searchresults-only", gname: "gname{{$loop->iteration}}"});
+            el = google.search.cse.element.getElement('gname{{$loop->iteration}}');
+            console.log(el.uiOptions)
+            el.execute("{{$translation}}");
           @endforeach
         }
         if (document.readyState == 'complete') {
@@ -51,7 +54,13 @@
        const myImageResultsRenderedCallback = function() { console.log("c")}
        const myWebSearchStartingCallback = function() { console.log("d")}
        const myWebResultsReadyCallback = function() { console.log("e")}
-       const myWebResultsRenderedCallback = function() { console.log("f")}
+       const myWebResultsRenderedCallback = function(gname, query, promoElts, resultElts) {
+         var el = document.querySelector(`[data-gname='${gname}']`)
+         el = el.querySelector(".gsc-tabhInactive");
+         console.log("el = ");
+         console.log(el);
+         el.click();
+        }
 
 
       // Insert it before the Search Element code snippet so the global properties like parsetags and callback
@@ -75,7 +84,7 @@
 
     </script>
     @foreach($translations as $translation)
-      <div id="gResults{{$loop->iteration}}" class="gcse-searchresults-only" data-gname="gname{{$loop->iteration}}" data-defaultToImageSearch="true"  data-enableImageSearch="true" ></div>
+      <div id="gResults{{$loop->iteration}}" class="gcse-searchresults-only" data-gname="gname{{$loop->iteration}}" data-defaultToImageSearch="true" ></div>
     @endforeach
     <script>
     </script>
