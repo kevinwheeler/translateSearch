@@ -22,34 +22,99 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+  /*
 Route::get('/results', function () {
-    $yo = ["sup"];
-    $yo = [Request('query')];
+  $translations = ["hi", "whats", "up"];
 
-$translations = Promise\wait(parallelMap(['en', 'fr', 'cs'], function ($languageCode) use ($yo) {
-    // \sleep($time); // a blocking function call, might also do blocking I/O here
-    $translationClient = new TranslationServiceClient();
-    $content = $yo;
-    $targetLanguage = $languageCode;
-    $response = $translationClient->translateText(
-        $content,
-        $targetLanguage,
-        #TODO change this to not use env()
-        TranslationServiceClient::locationName(env("GOOGLE_CLOUD_PROJECT"), 'global')
-    );
-    
-    $translationOutput = "";
-    foreach ($response->getTranslations() as $key => $translation) {
-        $separator = $key === 2
-            ? '!'
-            : ', ';
-        $translationOutput .= $translation->getTranslatedText() . $separator;
-    }
+  //curl example from https://stackoverflow.com/a/2138534/3470632
+  $ch = curl_init();
+  #TODO change this to not use env()
+  //curl_setopt($ch, CURLOPT_URL,'https://translate.googleapis.com/v3beta1/{parent=projects/*}:translateText');
 
-    return $translationOutput;
-}));
-    
-    return view('results', [
-        'translations' => $translations
-    ]);
+
+  curl_setopt($ch, CURLOPT_URL,'https://translate.googleapis.com/v3beta1/'.'projects/'. env("GOOGLE_CLOUD_PROJECT") . ':translateText');
+  curl_setopt($ch, CURLOPT_POST, true);
+
+  
+  $payload = json_encode( array(
+    "contents" => array(
+      "it was nice to meet you"
+    ),
+    "mimeType" => "text/plain",
+    "targetLanguageCode" => "de",
+  ));
+
+//   $payload = json_encode(<<<EOD
+//   {
+//     "contents": [
+//       string
+//     ],
+//     "mimeType": string,
+//     "sourceLanguageCode": string,
+//     "targetLanguageCode": string,
+//     "model": string,
+//     "glossaryConfig": {
+//       object (TranslateTextGlossaryConfig)
+//     },
+//     "labels": {
+//       string: string,
+//       ...
+//     }
+//   }  
+//   EOD
+//   );
+
+  curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+  curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+  
+  // Receive server response ...
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  
+  $server_output = curl_exec($ch);
+  curl_close ($ch);
+
+  dd($server_output);
+
+  return view('results', [
+      'translations' => $translations
+  ]);
 });
+*/
+
+ Route::get('/results', function () {
+     $yo = ["sup"];
+     $yo = [Request('query')];
+ try {
+ $translations = Promise\wait(parallelMap(['en', 'fr', 'cs', 'de', 'it', 'ru'], function ($languageCode) use ($yo) {
+//  $translations = Promise\wait(parallelMap(['en', 'fr', 'cs', 'de', 'it', 'ru', 'pl', 'ko', 'ja', 'nl', 'da', 'hr', 'uk', 'sv', 'es', 'no', 'ga', 'is', 'hu', 'he', 'el', 'fi', 'bg', 'ar'], function ($languageCode) use ($yo) {
+     // \sleep($time); // a blocking function call, might also do blocking I/O here
+     $translationClient = new TranslationServiceClient();
+     $content = $yo;
+     $targetLanguage = $languageCode;
+     $response = $translationClient->translateText(
+         $content,
+         $targetLanguage,
+         #TODO change this to not use env()
+         TranslationServiceClient::locationName(env("GOOGLE_CLOUD_PROJECT"), 'global')
+     );
+  
+     $translationOutput = "";
+     foreach ($response->getTranslations() as $key => $translation) {
+         $separator = $key === 2
+             ? '!'
+             : ', ';
+         $translationOutput .= $translation->getTranslatedText() . $separator;
+     }
+
+     return $translationOutput;
+ }));
+ }  catch (Exception $exception) {
+     dd($exception->getReasons());
+     exit;
+ }
+  
+     return view('results', [
+         'translations' => $translations
+     ]);
+ });

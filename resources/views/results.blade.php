@@ -84,6 +84,7 @@
 
     </script>
     @foreach($translations as $translation)
+      QUERY = {{$translation}}
       <div id="gResults{{$loop->iteration}}" class="gcse-searchresults-only" data-gname="gname{{$loop->iteration}}" data-defaultToImageSearch="true" ></div>
     @endforeach
     <script>
