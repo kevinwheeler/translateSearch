@@ -28,7 +28,10 @@ Route::get('/results', function () {
   $authToken = rtrim(shell_exec("gcloud auth application-default print-access-token"));
 
 
+  $translationInputQuery = [Request('query')];
+  // $targetLanguages = ['en', 'fr', 'cs', 'de', 'it', 'ru', 'pl', 'ko', 'ja', 'nl', 'da', 'hr', 'uk', 'sv', 'es', 'no', 'ga', 'is', 'hu', 'he', 'el', 'fi', 'bg', 'ar'];
   $targetLanguages = ['en', 'fr', 'cs', 'de', 'it', 'ru'];
+  // $targetLanguages = ['de'];
   $curlHandles = [];
   foreach($targetLanguages as $language) {
   //curl example from https://stackoverflow.com/a/2138534/3470632
@@ -36,16 +39,20 @@ Route::get('/results', function () {
   $curlHandles[] = $ch;
 
   #TODO change this to not use env()
-  curl_setopt($ch, CURLOPT_URL,'https://translate.googleapis.com/v3beta1/'.'projects/'. env("GOOGLE_CLOUD_PROJECT") . ':translateText');
+  curl_setopt($ch, CURLOPT_URL, 'https://translation.googleapis.com/language/translate/v2');
   curl_setopt($ch, CURLOPT_POST, true);
 
-  
+ 
+  // {
+  //   "q": "hi",
+  //   "target": "de",
+  //   "format": "text"
+  //  }
+
   $payload = json_encode( array(
-    "contents" => array(
-      "it was nice to meet you"
-    ),
-    "mimeType" => "text/plain",
-    "targetLanguageCode" => $language,
+    "q" => $translationInputQuery,
+    "target" => $language,
+    "format" => "text"
   ));
 
 //   $payload = json_encode(<<<EOD
@@ -70,7 +77,8 @@ Route::get('/results', function () {
 
   curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
   // curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-  curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json', "charset=utf-8", "Authorization: Bearer " . $authToken));
+  #TODO change this to not use env()
+  curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json; charset=utf-8', "X-goog-api-key: " . env("GOOGLE_TRANSLATE_API_KEY")));
   
   // Receive server response ...
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -96,16 +104,13 @@ Route::get('/results', function () {
 
   $translations = [];
 
-  foreach($curlHandles as $ch){
-    $translations[] = curl_multi_getcontent($ch);
+  foreach($curlHandles as $ch) {
+    $translations[] = json_decode(curl_multi_getcontent($ch), true)["data"]["translations"][0]["translatedText"];
 
   }
-  dd($translations);
 
-  $server_output = curl_exec($ch);
-  curl_close ($ch);
-
-  dd();
+  // $server_output = curl_exec($ch);
+  // curl_close ($ch);
 
   return view('results', [
       'translations' => $translations
