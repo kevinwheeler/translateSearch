@@ -37,8 +37,9 @@ Route::get('/results', function () {
   $translationInputQuery = [Request('query')];
   $targetLanguages = ['en', 'fr', 'cs', 'de', 'it', 'ru', 'pl', 'ko', 'ja', 'nl', 'da', 'hr', 'uk', 'sv', 'es', 'no', 'ga', 'is', 'hu', 'he', 'el', 'fi', 'bg', 'ar'];
 
+  #pagination example code used from here https://www.youtube.com/watch?v=sAJGyDPXESo
   $currentPage = Paginator::resolveCurrentPage() ?: 1;
-  $itemsPerPage = 5;
+  $itemsPerPage = 2;
   $offset = ($currentPage * $itemsPerPage) - $itemsPerPage;
 
   $languagesToShow = array_slice($targetLanguages, $offset , $itemsPerPage);
@@ -100,7 +101,7 @@ Route::get('/results', function () {
   // $server_output = curl_exec($ch);
   // curl_close ($ch);
   $paginator = new LengthAwarePaginator($translations ,count($targetLanguages) ,$itemsPerPage);
-  $paginator->path('/results');
+  $paginator->withPath('/results');
   // dd(compact('paginator'));
 
   return view('results', [
