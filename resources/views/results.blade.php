@@ -33,16 +33,9 @@
       const myInitializationCallback = function() {
         console.log("in myInitializationCallback");
         const doTheThing = function() {
-          var el;
-          @foreach($translations as $translation)
-            console.log("in foreach. rendering element inside myInitializiationCallabck")
-            google.search.cse.element.render({div: "gResults{{$loop->iteration}}", tag: "searchresults-only", gname: "gname{{$loop->iteration}}", attributes:{defaultToImageSearch: true} });
-            el = google.search.cse.element.getElement('gname{{$loop->iteration}}');
-            console.log("in foreach. ui options = ", el.uiOptions);
-            el.uiOptions["defaultToImageSearch"] ="true";
-            console.log("in foreach. executing element inside myInitializiationCallabck")
-            // el.execute("{{$translation}}");
-          @endforeach
+            console.log("rendering initial search element inside myInitializiationCallabck")
+          //  {{--  google.search.cse.element.render({div: "gResults{{$loop->iteration}}", tag: "searchresults-only", gname: "gname{{$loop->iteration}}", attributes:{defaultToImageSearch: true} }); --}}
+            google.search.cse.element.render({div: "gResults1", tag: "searchresults-only", gname: "gname1", attributes:{defaultToImageSearch: true} });
         }
         if (document.readyState == 'complete') {
           // Document is ready when Search Element is initialized.
@@ -67,16 +60,26 @@
         return items[elNumber-1];
       }
        const myImageResultsReadyCallback = function() { console.log("in myImageResultsReadyCallback")}
-       const myImageResultsRenderedCallback = function() { console.log("in myImageResultsRenderedCallback")}
+
+       const myImageResultsRenderedCallback = function(gname, query) { 
+
+        console.log("in myImageResultsRenderedCallback")
+         var elNumber =  gname.replace('gname','');
+         elNumber = parseInt(elNumber, 10);
+         var nextElNumber = elNumber + 1;
+
+         var translations = @json($translations->items());
+         
+         if (elNumber < translations.length) {
+          //  var nextElToRender = document.querySelector("[data-gname='gname" + (elNumber+1) +"']");
+          setTimeout(function() {
+               google.search.cse.element.render({div: "gResults"+nextElNumber, tag: "searchresults-only", gname: "gname"+nextElNumber, attributes:{defaultToImageSearch: true} });
+             }, 500);
+         }
+      }
        const myWebSearchStartingCallback = function() { console.log("in myWebSearchStartingCallback")}
        const myWebResultsReadyCallback = function() { console.log("in myWebResultsReadyCallback")}
-       const myWebResultsRenderedCallback = function(gname, query, promoElts, resultElts) {
-         var el = document.querySelector(`[data-gname='${gname}']`)
-         el = el.querySelector(".gsc-tabhInactive");
-         console.log("in myWebResultsRenderedCallback. gname = " + gname + "el = ", el);
-         
-        //  el.click();
-        }
+       const myWebResultsRenderedCallback = function() {console.log("in myWebResultsRenderedCallback");}
 
 
       // Insert it before the Search Element code snippet so the global properties like parsetags and callback
