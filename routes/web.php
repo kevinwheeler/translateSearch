@@ -1,7 +1,4 @@
 <?php
-use function Amp\ParallelFunctions\parallelMap;
-use Amp\Promise;
-use Google\Cloud\Translate\V3\TranslationServiceClient;
 use Illuminate\Support\Facades\Route;
 
 #TODO alphabetical order and move to controller
@@ -29,11 +26,6 @@ Route::get('/', function () {
 
 
 Route::get('/results', function () {
-  
-  $authToken = rtrim(shell_exec("gcloud auth application-default print-access-token"));
-
-
-
   $translationInputQuery = [Request('query')];
   $targetLanguages = ['en', 'fr', 'cs', 'de', 'it', 'ru', 'pl', 'ko', 'ja', 'nl', 'da', 'hr', 'uk', 'sv', 'es', 'no', 'ga', 'is', 'hu', 'he', 'el', 'fi', 'bg', 'ar'];
 
