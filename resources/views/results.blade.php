@@ -36,6 +36,8 @@
             console.log("rendering initial search element inside myInitializiationCallabck")
           //  {{--  google.search.cse.element.render({div: "gResults{{$loop->iteration}}", tag: "searchresults-only", gname: "gname{{$loop->iteration}}", attributes:{defaultToImageSearch: true} }); --}}
             google.search.cse.element.render({div: "gResults1", tag: "searchresults-only", gname: "gname1", attributes:{defaultToImageSearch: true} });
+            var el = google.search.cse.element.getElement("gname1");
+            el.execute("I don't know why adding this line of code fixes things");
         }
         if (document.readyState == 'complete') {
           // Document is ready when Search Element is initialized.

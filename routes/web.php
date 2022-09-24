@@ -39,7 +39,7 @@ Route::get('/results', function () {
 
   #pagination example code used from here https://www.youtube.com/watch?v=sAJGyDPXESo
   $currentPage = Paginator::resolveCurrentPage() ?: 1;
-  $itemsPerPage = 2;
+  $itemsPerPage = 5;
   $offset = ($currentPage * $itemsPerPage) - $itemsPerPage;
 
   $languagesToShow = array_slice($targetLanguages, $offset , $itemsPerPage);
