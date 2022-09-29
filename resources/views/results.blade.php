@@ -57,7 +57,7 @@
         console.log("in myImageSearchStartingCallback. el = ", el, "gname = " + gname, "query = " + query);
         
 
-        var items = @json($translations->items());
+        var items = @json(array_values($languagesAndTranslations->items()));
         console.log("items = ",items);
         return items[elNumber-1];
       }
@@ -70,7 +70,7 @@
          elNumber = parseInt(elNumber, 10);
          var nextElNumber = elNumber + 1;
 
-         var translations = @json($translations->items());
+        var translations = @json(array_values($languagesAndTranslations->items()));
          
          if (elNumber < translations.length) {
           //  var nextElToRender = document.querySelector("[data-gname='gname" + (elNumber+1) +"']");
@@ -105,12 +105,13 @@
       };
 
     </script>
-    @foreach($translations as $translation)
+    @foreach($languagesAndTranslations as $language => $translation)
+      LANGUAGE = {{$language}}
       QUERY = {{$translation}}
       <div id="gResults{{$loop->iteration}}" class="gcse-searchresults-only" data-gname="gname{{$loop->iteration}}" data-defaultToImageSearch="true" enableImageSearch="true" defaultToImageSearch="true"></div>
     @endforeach
 
-    {!! $translations->withQueryString()->links() !!}
+    {!! $languagesAndTranslations->withQueryString()->links() !!}
     <script>
     </script>
     </body>
