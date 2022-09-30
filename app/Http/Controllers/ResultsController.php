@@ -112,7 +112,7 @@ class ResultsController extends Controller
   //TODO do I need to close the individual curl handles when using curl multi?
   // $server_output = curl_exec($ch);
   // curl_close ($ch);
-  $paginator = new LengthAwarePaginator($translations,count($targetLanguages) ,$itemsPerPage);
+  $paginator = new LengthAwarePaginator($languagesAndTranslations,count($targetLanguages) ,$itemsPerPage);
   $paginator->withPath('/results');
   // dd(compact('paginator'));
 

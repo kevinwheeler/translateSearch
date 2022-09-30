@@ -5,26 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Translate Search</title>
-        <style>
-            body {
-                font-family: 'Nunito', sans-serif;
-            }
-        </style>
-        <style type="text/css" media="screen">
-            iframe {
-                width: 100%;
-             }
-            #kmw1 {
-                position: static !important;
-             display: block !important:
-             }
-
-            #kmw2 {
-                position: static !important;
-            display: block !important:
-            }
-        </style>
-        <script async src="https://cse.google.com/cse.js?cx=c6e7ebcdec9ef45cb"></script>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
       <form action="/results" method="GET">

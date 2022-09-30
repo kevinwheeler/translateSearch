@@ -11,95 +11,89 @@
                 font-family: 'Nunito', sans-serif;
             }
         </style>
-        <style type="text/css" media="screen">
-            iframe {
-                width: 100%;
-             }
-            #kmw1 {
-                position: static !important;
-             display: block !important:
-             }
-
-            #kmw2 {
-                position: static !important;
-            display: block !important:
-            }
-        </style>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script async src="https://cse.google.com/cse.js?cx=c6e7ebcdec9ef45cb"></script>
     </head>
     <body>
     <script>
-      // const myInitializationCallback = function() {}
-      const myInitializationCallback = function() {
-        console.log("in myInitializationCallback");
-        const doTheThing = function() {
-            console.log("rendering initial search element inside myInitializiationCallabck")
-          //  {{--  google.search.cse.element.render({div: "gResults{{$loop->iteration}}", tag: "searchresults-only", gname: "gname{{$loop->iteration}}", attributes:{defaultToImageSearch: true} }); --}}
+      // const googleInitializationCallback = function() {}
+      const googleInitializationCallback = function() {
+        const initialize = function() {
             google.search.cse.element.render({div: "gResults1", tag: "searchresults-only", gname: "gname1", attributes:{defaultToImageSearch: true} });
             var el = google.search.cse.element.getElement("gname1");
-            el.execute("I don't know why adding this line of code fixes things");
+            //For some reason adding this execute line fixes everything.
+            // My guess is that elements won't render unless the URL in the URL bar has
+            // gsc parameter / a search query set. We'll just set this to "." since we are
+            // going to update the search query 
+            el.execute(".");
         }
         if (document.readyState == 'complete') {
           // Document is ready when Search Element is initialized.
-          doTheThing();
+          initialize();
         } else {
           // Document is not ready yet, when Search Element is initialized.
-          google.setOnLoadCallback(doTheThing, true);
+          google.setOnLoadCallback(initialize, true);
         }
       };
 
-       //myInitializationCallback = function() {console.log("z");}
-       const myImageSearchStartingCallback = function(gname, query) {
+       // Each instance of a return value from this function will end up being the
+       // search query that our image search uses. This is the one and only place
+       // that we set the search query (not counting our el.execute(".") stub query).
+       const imageSearchStartingCallback = function(gname, query) {
         var el = google.search.cse.element.getElement(gname);
+        //grab the number at the end of the html element's attribute data-gname="gname{x}"
         var elNumber =  gname.replace('gname','');
         elNumber = parseInt(elNumber, 10);
-        console.log("el number = " + elNumber);
-        console.log("in myImageSearchStartingCallback. el = ", el, "gname = " + gname, "query = " + query);
-        
 
-        var items = @json(array_values($languagesAndTranslations->items()));
-        console.log("items = ",items);
-        return items[elNumber-1];
+        //change the search query of this google search element to be 
+        // the translation we want to google search
+        var translations = @json(array_values($languagesAndTranslations->items()));
+        return translations[elNumber-1];
       }
-       const myImageResultsReadyCallback = function() { console.log("in myImageResultsReadyCallback")}
+       const imageResultsRenderedCallback = function(gname, query) { 
 
-       const myImageResultsRenderedCallback = function(gname, query) { 
-
-        console.log("in myImageResultsRenderedCallback")
          var elNumber =  gname.replace('gname','');
          elNumber = parseInt(elNumber, 10);
          var nextElNumber = elNumber + 1;
 
-        var translations = @json(array_values($languagesAndTranslations->items()));
+        var numTranslations = @json(array_values($languagesAndTranslations->items())).length;
          
-         if (elNumber < translations.length) {
-          //  var nextElToRender = document.querySelector("[data-gname='gname" + (elNumber+1) +"']");
+         // If the image results that just got rendered aren't the last image search results
+         // that need to be rendered, render the next one.
+         if (elNumber < numTranslations) {
+          // wait a little bit before rendering the next set of Google Image search results,
+          // so that Google doesn't rate limit us.
           setTimeout(function() {
                google.search.cse.element.render({div: "gResults"+nextElNumber, tag: "searchresults-only", gname: "gname"+nextElNumber, attributes:{defaultToImageSearch: true} });
              }, 500);
          }
       }
-       const myWebSearchStartingCallback = function() { console.log("in myWebSearchStartingCallback")}
-       const myWebResultsReadyCallback = function() { console.log("in myWebResultsReadyCallback")}
-       const myWebResultsRenderedCallback = function() {console.log("in myWebResultsRenderedCallback");}
+
+       // We don't use/need these callbacks, but here they are in case you want to add
+       // anything to them.
+       const imageResultsReadyCallback = function() {}
+       const webSearchStartingCallback = function() {}
+       const webResultsReadyCallback = function() {}
+       const webResultsRenderedCallback = function() {}
 
 
       // Insert it before the Search Element code snippet so the global properties like parsetags and callback
       // are available when cse.js runs.
       window.__gcse = {
         parsetags: 'explicit', // Defaults to 'onload'
-        // parsetags: 'onload', // Defaults to 'onload'
-        initializationCallback: myInitializationCallback,
+        initializationCallback: googleInitializationCallback,
         searchCallbacks: {
           image: {
-            starting: myImageSearchStartingCallback,
-            ready: myImageResultsReadyCallback,
-            rendered: myImageResultsRenderedCallback,
+            starting: imageSearchStartingCallback,
+            ready: imageResultsReadyCallback,
+            rendered: imageResultsRenderedCallback,
           },
+          // We don't use/need these callbacks, but here they are if you want to add
+          // anything to them.
           web: {
-            starting: myWebSearchStartingCallback,
-            ready: myWebResultsReadyCallback,
-            rendered: myWebResultsRenderedCallback,
+            starting: webSearchStartingCallback,
+            ready: webResultsReadyCallback,
+            rendered: webResultsRenderedCallback,
           },
         },
       };
