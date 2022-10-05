@@ -1,38 +1,3 @@
-// import './handleGoogleError';
- import _ from 'lodash';
-
- function mutationCallback(mutationList, observer) {
-  mutationList.forEach((mutation) => {
-    // If a captcha element has been added to the DOM, hide most of the page
-    // except fo the captcha, so the user will see the captcha.
-    if (mutation.target.id === "recaptcha-element") {
-      $("nav:last-of-type").hide();
-      // $("[id^='gResultsContainer']").hide();
-      $(".gResultsContainer").hide();
-      const closestgResultsContainer = mutation.target.closest(".gResultsContainer");
-      $(closestgResultsContainer).show()
-    }
-  });
-}
-
-const observer = new MutationObserver(mutationCallback);
-const elementToObserve = document.querySelector("html");
-observer.observe(elementToObserve, {subtree: true, childList: true});
-
-//When Google's search fails to load, call this function
-var onGSearchLoadError = _.throttle(function() {
-    $("#staticBackdrop").modal("show");
-    // alert("Google search failed to load. Google may be rate limiting you due to too many requests. This can happen when Google sends you a captcha / tells you to prove you are a human and you don't do so.");
-  },
-  5000, {leading: true, trailing: false}
-);
-
-window.addEventListener('error', ((e) => {
-  if (e.target.src.startsWith("https://cse.google.com")){
-    onGSearchLoadError();
-  }
-}), true)
-
 const googleInitializationCallback = function() {
   console.log("in outer initialize");
   const initialize = function() {
