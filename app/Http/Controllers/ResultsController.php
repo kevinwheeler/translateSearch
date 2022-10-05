@@ -1,4 +1,8 @@
 <?php
+// We are only going to translate the queries we need right now, so if we are showing
+// 5 translations at a time, we will only call out to Google's API to do 5 translations right now.
+// And then if the user clicks to the next page to see the next 5 translations, we will
+// Call back out to Google's translation API to get 5 more translations.
 
 namespace App\Http\Controllers;
 
@@ -104,6 +108,7 @@ class ResultsController extends Controller
   $translations = [];
 
   foreach($curlHandles as $ch) {
+    //TODO add error handling here
     $translations[] = json_decode(curl_multi_getcontent($ch), true)["data"]["translations"][0]["translatedText"];
   }
 
