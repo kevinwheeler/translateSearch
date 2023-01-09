@@ -6,9 +6,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Request;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Request;
+use Psr\Http\Message\ResponseInterface;
 
 class ResultsController extends Controller
 {
@@ -60,9 +64,52 @@ class ResultsController extends Controller
   // $targetLanguages = ['en', 'fr', 'cs', 'de', 'it', 'ru'];
   // $targetLanguages = ['de'];
   $curlHandles = [];
+  
+
+  // $client = new Client([
+  //   'base_uri' => 'https://translation.googleapis.com/language/translate/v2',
+  //   'timeout'  => 10.0,
+  // ]);
+
+  // $promises = [];
+  // foreach($languagesToShow as $language) {
+  //   $promise = $client->postAsync('https://translation.googleapis.com/language/translate/v2', [
+  //       #TODO change this to not use env()
+  //       'headers' => [
+  //               "X-goog-api-key" => env("GOOGLE_TRANSLATE_API_KEY"),
+  //       ],
+  //       'json' => [
+  //               "q" => $translationInputQuery,
+  //               "target" => $language,
+  //               "format" => "text"
+  //       ],
+  //   ])->then(
+  //       function (ResponseInterface $res){
+  //           $response = json_decode($res->getBody()->getContents());
+  //           return $response;
+  //       },
+  //       function (RequestException $e) {
+  //           throw($e);
+  //           // $response = [];
+  //           // $response['data'] = $e->getMessage();
+    
+  //           // return $response;
+  //       }
+  //   );
+  //   $promises[] = $promise;
+  // }
+
+  // $responses = Promise\Utils::unwrap($promises);
+
+  // dd($responses);
+  //// echo json_encode($response);
+
   foreach($languagesToShow as $language) {
   //curl example from https://stackoverflow.com/a/2138534/3470632
   $ch = curl_init();
+  if (!$ch) {
+    throw new \RuntimeException("curl_init() failed");
+  }
   $curlHandles[] = $ch;
 
   #TODO change this to not use env()
@@ -98,6 +145,25 @@ class ResultsController extends Controller
   do {
     curl_multi_exec($mh, $running);
   } while ($running);
+
+  $res = array();
+  foreach ($curlHandles as $ch){
+    $curlErrorCode = curl_errno($ch);
+    if ($curlErrorCode === 0) {
+      $info = curl_getinfo($ch);
+      $info['url'] = trim($info['url']);
+      if ($info['http_code'] == 200) {
+          $content = curl_multi_getcontent($ch);
+          $res[] = sprintf("#HTTP-OK %0.2f kb returned", strlen($content) / 1024);
+      } else {
+          // $res[] = "#HTTP-ERROR {$info['http_code'] }  for : {$info['url']}";
+          $res[] = curl_multi_getcontent($ch);
+      }
+    } else {
+        $res[] = sprintf("#CURL-ERROR %d: %s ", $curlErrorCode, curl_error($ch));
+    }
+  }
+  dd($res);
 
   foreach($curlHandles as $ch) {
     curl_multi_remove_handle($mh, $ch);
