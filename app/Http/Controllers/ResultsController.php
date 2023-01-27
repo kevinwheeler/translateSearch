@@ -146,24 +146,24 @@ class ResultsController extends Controller
     curl_multi_exec($mh, $running);
   } while ($running);
 
-  $res = array();
-  foreach ($curlHandles as $ch){
-    $curlErrorCode = curl_errno($ch);
-    if ($curlErrorCode === 0) {
-      $info = curl_getinfo($ch);
-      $info['url'] = trim($info['url']);
-      if ($info['http_code'] == 200) {
-          $content = curl_multi_getcontent($ch);
-          $res[] = sprintf("#HTTP-OK %0.2f kb returned", strlen($content) / 1024);
-      } else {
-          // $res[] = "#HTTP-ERROR {$info['http_code'] }  for : {$info['url']}";
-          $res[] = curl_multi_getcontent($ch);
-      }
-    } else {
-        $res[] = sprintf("#CURL-ERROR %d: %s ", $curlErrorCode, curl_error($ch));
-    }
-  }
-  dd($res);
+  // $res = array();
+  // foreach ($curlHandles as $ch){
+  //   $curlErrorCode = curl_errno($ch);
+  //   if ($curlErrorCode === 0) {
+  //     $info = curl_getinfo($ch);
+  //     $info['url'] = trim($info['url']);
+  //     if ($info['http_code'] == 200) {
+  //         $content = curl_multi_getcontent($ch);
+  //         $res[] = sprintf("#HTTP-OK %0.2f kb returned", strlen($content) / 1024);
+  //     } else {
+  //         // $res[] = "#HTTP-ERROR {$info['http_code'] }  for : {$info['url']}";
+  //         $res[] = curl_multi_getcontent($ch);
+  //     }
+  //   } else {
+  //       $res[] = sprintf("#CURL-ERROR %d: %s ", $curlErrorCode, curl_error($ch));
+  //   }
+  // }
+  // dd($res);
 
   foreach($curlHandles as $ch) {
     curl_multi_remove_handle($mh, $ch);

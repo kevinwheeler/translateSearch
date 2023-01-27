@@ -35,7 +35,7 @@ const googleInitializationCallback = function() {
 //   var translations = @json(array_values($languagesAndTranslations->items()));
   return translations[elNumber-1];
 }
- const imageResultsRenderedCallback = function(gname, query) { 
+ const imageResultsRenderedCallback = function(gname, query) {
   // If we hid these elements while waiting for a user to solve a captcha,
   // go ahead and show them again.
   // $("[id^='gResults']").show()

@@ -13,7 +13,7 @@
   <label class="checkbox-label" for="language1">Albanian</label><br>
   <input class= "checkbox" type="checkbox" id="language2" name="language2" value="am">
   <label class="checkbox-label" for="language2">Amharic</label><br>
-  <input class= "checkbox" type="checkbox" id="language3" name="language3" value="ar" checked>
+  <input class= "checkbox" type="checkbox" id="language3" name="language3" value="ar">
   <label class="checkbox-label" for="language3">Arabic</label><br>
   <input class= "checkbox" type="checkbox" id="language4" name="language4" value="hy">
   <label class="checkbox-label" for="language4">Armenian</label><br>
@@ -23,7 +23,7 @@
   <label class="checkbox-label" for="language6">Basque</label><br>
   <input class= "checkbox" type="checkbox" id="language7" name="language7" value="be">
   <label class="checkbox-label" for="language7">Belarusian</label><br>
-  <input class= "checkbox" type="checkbox" id="language8" name="language8" value="bn" checked>
+  <input class= "checkbox" type="checkbox" id="language8" name="language8" value="bn">
   <label class="checkbox-label" for="language8">Bengali</label><br>
   <input class= "checkbox" type="checkbox" id="language9" name="language9" value="bs">
   <label class="checkbox-label" for="language9">Bosnian</label><br>
@@ -33,9 +33,9 @@
   <label class="checkbox-label" for="language11">Catalan</label><br>
   <input class= "checkbox" type="checkbox" id="language12" name="language12" value="ceb">
   <label class="checkbox-label" for="language12">Cebuano</label><br>
-  <input class= "checkbox" type="checkbox" id="language13" name="language13" value="zh-CN" checked>
+  <input class= "checkbox" type="checkbox" id="language13" name="language13" value="zh-CN">
   <label class="checkbox-label" for="language13">Chinese (Simplified)</label><br>
-  <input class= "checkbox" type="checkbox" id="language14" name="language14" value="zh-TW" checked>
+  <input class= "checkbox" type="checkbox" id="language14" name="language14" value="zh-TW">
   <label class="checkbox-label" for="language14">Chinese (Traditional)</label><br>
   <input class= "checkbox" type="checkbox" id="language15" name="language15" value="co">
   <label class="checkbox-label" for="language15">Corsican</label><br>
@@ -47,7 +47,7 @@
   <label class="checkbox-label" for="language18">Danish</label><br>
   <input class= "checkbox" type="checkbox" id="language19" name="language19" value="nl">
   <label class="checkbox-label" for="language19">Dutch</label><br>
-  <input class= "checkbox" type="checkbox" id="language20" name="language20" value="en" checked>
+  <input class= "checkbox" type="checkbox" id="language20" name="language20" value="en">
   <label class="checkbox-label" for="language20">English</label><br>
   <input class= "checkbox" type="checkbox" id="language21" name="language21" value="eo">
   <label class="checkbox-label" for="language21">Esperanto</label><br>
@@ -57,7 +57,7 @@
   <label class="checkbox-label" for="language23">Filipino (Tagalog)</label><br>
   <input class= "checkbox" type="checkbox" id="language24" name="language24" value="fi">
   <label class="checkbox-label" for="language24">Finnish</label><br>
-  <input class= "checkbox" type="checkbox" id="language25" name="language25" value="fr" checked>
+  <input class= "checkbox" type="checkbox" id="language25" name="language25" value="fr">
   <label class="checkbox-label" for="language25">French</label><br>
   <input class= "checkbox" type="checkbox" id="language26" name="language26" value="fy">
   <label class="checkbox-label" for="language26">Frisian</label><br>
@@ -65,7 +65,7 @@
   <label class="checkbox-label" for="language27">Galician</label><br>
   <input class= "checkbox" type="checkbox" id="language28" name="language28" value="ka">
   <label class="checkbox-label" for="language28">Georgian</label><br>
-  <input class= "checkbox" type="checkbox" id="language29" name="language29" value="de" checked>
+  <input class= "checkbox" type="checkbox" id="language29" name="language29" value="de">
   <label class="checkbox-label" for="language29">German</label><br>
   <input class= "checkbox" type="checkbox" id="language30" name="language30" value="el">
   <label class="checkbox-label" for="language30">Greek</label><br>
@@ -77,25 +77,25 @@
   <label class="checkbox-label" for="language33">Hausa</label><br>
   <input class= "checkbox" type="checkbox" id="language34" name="language34" value="haw">
   <label class="checkbox-label" for="language34">Hawaiian</label><br>
-  <input class= "checkbox" type="checkbox" id="language35" name="language35" value="he" checked>
+  <input class= "checkbox" type="checkbox" id="language35" name="language35" value="he">
   <label class="checkbox-label" for="language35">Hebrew</label><br>
-  <input class= "checkbox" type="checkbox" id="language36" name="language36" value="hi" checked>
+  <input class= "checkbox" type="checkbox" id="language36" name="language36" value="hi">
   <label class="checkbox-label" for="language36">Hindi</label><br>
   <input class= "checkbox" type="checkbox" id="language37" name="language37" value="hmn">
   <label class="checkbox-label" for="language37">Hmong</label><br>
   <input class= "checkbox" type="checkbox" id="language38" name="language38" value="hu">
   <label class="checkbox-label" for="language38">Hungarian</label><br>
-  <input class= "checkbox" type="checkbox" id="language39" name="language39" value="is" checked>
+  <input class= "checkbox" type="checkbox" id="language39" name="language39" value="is">
   <label class="checkbox-label" for="language39">Icelandic</label><br>
   <input class= "checkbox" type="checkbox" id="language40" name="language40" value="ig">
   <label class="checkbox-label" for="language40">Igbo</label><br>
-  <input class= "checkbox" type="checkbox" id="language41" name="language41" value="id" checked>
+  <input class= "checkbox" type="checkbox" id="language41" name="language41" value="id">
   <label class="checkbox-label" for="language41">Indonesian</label><br>
-  <input class= "checkbox" type="checkbox" id="language42" name="language42" value="ga" checked>
+  <input class= "checkbox" type="checkbox" id="language42" name="language42" value="ga">
   <label class="checkbox-label" for="language42">Irish</label><br>
-  <input class= "checkbox" type="checkbox" id="language43" name="language43" value="it" checked>
+  <input class= "checkbox" type="checkbox" id="language43" name="language43" value="it">
   <label class="checkbox-label" for="language43">Italian</label><br>
-  <input class= "checkbox" type="checkbox" id="language44" name="language44" value="ja" checked>
+  <input class= "checkbox" type="checkbox" id="language44" name="language44" value="ja">
   <label class="checkbox-label" for="language44">Japanese</label><br>
   <input class= "checkbox" type="checkbox" id="language45" name="language45" value="jv">
   <label class="checkbox-label" for="language45">Javanese</label><br>
@@ -107,7 +107,7 @@
   <label class="checkbox-label" for="language48">Khmer</label><br>
   <input class= "checkbox" type="checkbox" id="language49" name="language49" value="rw">
   <label class="checkbox-label" for="language49">Kinyarwanda</label><br>
-  <input class= "checkbox" type="checkbox" id="language50" name="language50" value="ko" checked>
+  <input class= "checkbox" type="checkbox" id="language50" name="language50" value="ko">
   <label class="checkbox-label" for="language50">Korean</label><br>
   <input class= "checkbox" type="checkbox" id="language51" name="language51" value="ku">
   <label class="checkbox-label" for="language51">Kurdish</label><br>
@@ -159,9 +159,9 @@
   <label class="checkbox-label" for="language74">Portuguese (Portugal, Brazil)</label><br>
   <input class= "checkbox" type="checkbox" id="language75" name="language75" value="pa">
   <label class="checkbox-label" for="language75">Punjabi</label><br>
-  <input class= "checkbox" type="checkbox" id="language76" name="language76" value="ro" checked>
+  <input class= "checkbox" type="checkbox" id="language76" name="language76" value="ro">
   <label class="checkbox-label" for="language76">Romanian</label><br>
-  <input class= "checkbox" type="checkbox" id="language77" name="language77" value="ru" checked>
+  <input class= "checkbox" type="checkbox" id="language77" name="language77" value="ru">
   <label class="checkbox-label" for="language77">Russian</label><br>
   <input class= "checkbox" type="checkbox" id="language78" name="language78" value="sm">
   <label class="checkbox-label" for="language78">Samoan</label><br>
@@ -183,7 +183,7 @@
   <label class="checkbox-label" for="language86">Slovenian</label><br>
   <input class= "checkbox" type="checkbox" id="language87" name="language87" value="so">
   <label class="checkbox-label" for="language87">Somali</label><br>
-  <input class= "checkbox" type="checkbox" id="language88" name="language88" value="es" checked>
+  <input class= "checkbox" type="checkbox" id="language88" name="language88" value="es">
   <label class="checkbox-label" for="language88">Spanish</label><br>
   <input class= "checkbox" type="checkbox" id="language89" name="language89" value="su">
   <label class="checkbox-label" for="language89">Sundanese</label><br>
@@ -207,7 +207,7 @@
   <label class="checkbox-label" for="language98">Turkish</label><br>
   <input class= "checkbox" type="checkbox" id="language99" name="language99" value="tk">
   <label class="checkbox-label" for="language99">Turkmen</label><br>
-  <input class= "checkbox" type="checkbox" id="language100" name="language100" value="uk" checked>
+  <input class= "checkbox" type="checkbox" id="language100" name="language100" value="uk">
   <label class="checkbox-label" for="language100">Ukrainian</label><br>
   <input class= "checkbox" type="checkbox" id="language101" name="language101" value="ur">
   <label class="checkbox-label" for="language101">Urdu</label><br>
@@ -215,7 +215,7 @@
   <label class="checkbox-label" for="language102">Uyghur</label><br>
   <input class= "checkbox" type="checkbox" id="language103" name="language103" value="uz">
   <label class="checkbox-label" for="language103">Uzbek</label><br>
-  <input class= "checkbox" type="checkbox" id="language104" name="language104" value="vi" checked>
+  <input class= "checkbox" type="checkbox" id="language104" name="language104" value="vi">
   <label class="checkbox-label" for="language104">Vietnamese</label><br>
   <input class= "checkbox" type="checkbox" id="language105" name="language105" value="cy">
   <label class="checkbox-label" for="language105">Welsh</label><br>
@@ -228,3 +228,7 @@
   <input class= "checkbox" type="checkbox" id="language109" name="language109" value="zu">
   <label class="checkbox-label" for="language109">Zulu</label><br>
 </form>
+
+<script>
+
+</script>

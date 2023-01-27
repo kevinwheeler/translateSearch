@@ -6,7 +6,7 @@
       <script>
         window.translations = @json(array_values($languagesAndTranslations->items()));
       </script>
-      @vite(['resources/js/googleStuff.js'])
+      @vite(['resources/js/googleStuff.js', 'resources/js/resultsPage.js'])
       <script defer src="https://cse.google.com/cse.js?cx=c6e7ebcdec9ef45cb"></script>
     </x-slot>
 
