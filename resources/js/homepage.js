@@ -22,3 +22,23 @@ function kmwSetForm(languages){
 }
 
 kmwSetForm(selectedLanguages);
+
+function onFormSubmit(e) {
+    if (e.preventDefault) e.preventDefault();
+
+    let actionUrl = new URL("results", document.baseURI);
+    for (const language of selectedLanguages){
+        actionUrl.searchParams.append(language[0], language[1]);
+    }
+    let searchQuery = document.getElementById('queryInput').value;
+    actionUrl.searchParams.append("query", searchQuery);
+       
+    // fetch(actionUrl);
+    window.location = actionUrl;
+    // You must return false to prevent the default form behavior
+    return false;
+}
+
+
+let form = document.getElementById('mainForm');
+form.addEventListener("submit", onFormSubmit);

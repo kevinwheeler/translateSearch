@@ -1,4 +1,4 @@
-<form action="/results" method="GET">
+<form id="mainForm" action="" method="GET">
   <label for="queryInput"></label>
   <input type="text" name="query", id="queryInput">
   <button>Submit</button>
