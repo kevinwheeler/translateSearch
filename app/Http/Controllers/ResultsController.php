@@ -6,13 +6,14 @@
 
 namespace App\Http\Controllers;
 
+use Dotenv\Dotenv;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Request;
 use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ResultsController extends Controller
 {
@@ -22,7 +23,49 @@ class ResultsController extends Controller
       //   'query' => 'required|max:50',
       // ]);
 
-      if (!Request::has("query") || strlen(Request("query")) > 50 || strlen(Request("query")) < 1){
+
+      if (!Request::has("g-recaptcha-response") || strlen(Request("g-recaptcha-response")) == 0) {
+        dd("wat1");
+        return response("User Error: submit recaptcha token", 400);
+      }
+
+
+      $client = new \GuzzleHttp\Client();
+
+      // dd(Request("g-recaptcha-response"));
+
+       // Create a POST request
+       $response = $client->request(
+           'POST',
+           'https://www.google.com/recaptcha/api/siteverify',
+           [
+              //  'form_params' => [
+              //      'key1' => 'value1',
+              //      'key2' => 'value2'
+              //  ]
+              'form_params' => [
+                  'secret' => env("RECAPTCHA_SECRET_KEY"),//TODO don't use env()
+                  'response' => Request("g-recaptcha-response"),
+                  'remoteip' => Request::ip()
+               ]
+           ]
+       );
+
+      //  dd(env("RECAPTCHA_SECRET_KEY"));
+       
+       // Parse the response object, e.g. read the headers, body, etc.
+       $headers = $response->getHeaders();
+      //  $body = $response->getBody();
+       $g_response = json_decode($response->getBody());
+       if (!$g_response->success) {
+        dd($g_response);
+        return response("User Error: submit recaptcha token", 400);
+       }
+
+
+
+
+      if (!Request::has("query") || strlen(Request("query")) > 50 || strlen(Request("query")) < 1) {
         return response("User Error: Search query required and can't be more than 50 characters", 400);
       }
 

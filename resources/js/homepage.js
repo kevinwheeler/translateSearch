@@ -43,7 +43,7 @@ window.onSubmit = function(token) {
     let searchQuery = document.getElementById('queryInput').value;
     actionUrl.searchParams.append("query", searchQuery);
 
-    actionUrl.searchParams.append("g-recaptcha-response=", token);
+    actionUrl.searchParams.append("g-recaptcha-response", token);
        
     // fetch(actionUrl);
     window.location = actionUrl;
