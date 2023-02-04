@@ -1,18 +1,16 @@
 <div class="container">
+
+
   <form id="mainForm" action="" method="GET">
     <div class="form-group">
       <label for="queryInput"></label>
       <input type="text" name="query" id="queryInput" maxlength="50">
-      <button>Submit</button>
+      {{-- <button>Submit</button> --}}
+      <button class="g-recaptcha" data-sitekey="6Ld2FkEkAAAAAEhvtS6WWLaBqemOc693wkN6qS0W" data-callback="onSubmit">Submit</button>
       <small id="isthisevenneeded" class="form-text text-muted">
         Search query length must be 50 characters or less.
       </small>
     </div>
-  
-  
-    {{-- <br>
-    <span>Choose up to 25 languages:</span>
-    <br> --}}
   
     <input class= "checkbox" type="checkbox" id="language0" name="language0" value="af">
     <label class="checkbox-label" for="language0">Afrikaans</label><br>

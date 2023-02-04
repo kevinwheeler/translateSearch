@@ -33,15 +33,17 @@ kmwSetForm(selectedLanguages);
 // because we want the search results to be ordered based on the order that checkboxes/languages
 // were checked. If someone clicked on English first, we want enlish results to be the first search
 // results.
-function onFormSubmit(e) {
-    if (e.preventDefault) e.preventDefault();
-
+// function onFormSubmit(e) {
+window.onSubmit = function(token) {
+    // if (e.preventDefault) e.preventDefault();
     let actionUrl = new URL("results", document.baseURI);
     for (const language of selectedLanguages){
         actionUrl.searchParams.append(language[0], language[1]);
     }
     let searchQuery = document.getElementById('queryInput').value;
     actionUrl.searchParams.append("query", searchQuery);
+
+    actionUrl.searchParams.append("g-recaptcha-response=", token);
        
     // fetch(actionUrl);
     window.location = actionUrl;
@@ -49,8 +51,9 @@ function onFormSubmit(e) {
     return false;
 }
 
-let form = document.getElementById('mainForm');
-form.addEventListener("submit", onFormSubmit);
+
+// let form = document.getElementById('mainForm');
+// form.addEventListener("submit", onFormSubmit);
 
 
 function modelToQueryString(){
