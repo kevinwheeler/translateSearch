@@ -23,4 +23,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/results', [ResultsController::class, 'index']);
+Route::post('/results', [ResultsController::class, 'index']);

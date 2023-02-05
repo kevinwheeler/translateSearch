@@ -1,7 +1,7 @@
 <div class="container">
 
 
-  <form id="mainForm" action="" method="GET">
+  <form id="mainForm" action="" method="POST">
     <div class="form-group">
       <label for="queryInput"></label>
       <input type="text" name="query" id="queryInput" maxlength="50">

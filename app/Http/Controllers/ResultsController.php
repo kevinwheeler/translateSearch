@@ -17,12 +17,10 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ResultsController extends Controller
 {
-    public function index(){
-  
+    public function index() {
       // $validated = Request::validate([
       //   'query' => 'required|max:50',
       // ]);
-
 
       if (!Request::has("g-recaptcha-response") || strlen(Request("g-recaptcha-response")) == 0) {
         dd("wat1");
@@ -51,14 +49,12 @@ class ResultsController extends Controller
            ]
        );
 
-      //  dd(env("RECAPTCHA_SECRET_KEY"));
        
        // Parse the response object, e.g. read the headers, body, etc.
        $headers = $response->getHeaders();
       //  $body = $response->getBody();
        $g_response = json_decode($response->getBody());
        if (!$g_response->success) {
-        dd($g_response);
         return response("User Error: submit recaptcha token", 400);
        }
 

@@ -43,10 +43,15 @@ window.onSubmit = function(token) {
     let searchQuery = document.getElementById('queryInput').value;
     actionUrl.searchParams.append("query", searchQuery);
 
-    actionUrl.searchParams.append("g-recaptcha-response", token);
+    let postBodyPameters = {
+        "g-recaptcha-response": token,
+        "_token": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    };
+    // actionUrl.searchParams.append("g-recaptcha-response", token);
        
     // fetch(actionUrl);
-    window.location = actionUrl;
+    // window.location = actionUrl;
+    window.kmwPost(actionUrl, postBodyPameters);
     // You must return false to prevent the default form behavior
     return false;
 }
