@@ -17,6 +17,14 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class ResultsController extends Controller
 {
+
+    private function removeParam($url, $param) {
+      $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*$/', '', $url);
+      $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*&/', '$1', $url);
+      return $url;
+    }
+
+
     public function index() {
       // $validated = Request::validate([
       //   'query' => 'required|max:50',
@@ -252,9 +260,15 @@ class ResultsController extends Controller
       $paginator->withPath('/results');
       // dd(compact('paginator'));
 
+      $queryString = str_replace(Request::url(), '', Request::fullUrl());
+      $URL = $this->removeParam($queryString, 'page');
+      $URL = $this->removeParam($queryString, 'query');
+      $URL = '/' . "#" . substr($URL,1);
+
       return view('results', [
           // 'translations' => compact('paginator')['translations']
-          'languagesAndTranslations' => $paginator
+          'languagesAndTranslations' => $paginator,
+          'homeUrl' => $URL
       ]);
 
     }

@@ -14,7 +14,7 @@
       <script defer src="https://cse.google.com/cse.js?cx=c6e7ebcdec9ef45cb"></script>
     </x-slot>
 
-    <x-navbar/>
+    <x-navbar :homeUrl="$homeUrl" />
     @foreach($languagesAndTranslations as $language => $translation)
       <div class="gResultsContainer">
         LANGUAGE = {{$language}}

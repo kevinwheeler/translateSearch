@@ -16,7 +16,6 @@ for (let i = 0; i < keyAndValueStrings.length; i++) {
 
 function kmwSetForm(languages){
     for (const language of languages){
-        console.log("in loop");
         let languageCode = language[1];
         document.querySelector(`input[value=${languageCode}]`).checked = true;
     }
