@@ -24,3 +24,6 @@ Route::get('/', function () {
 });
 
 Route::post('/results', [ResultsController::class, 'index']);
+Route::get('/results', [ResultsController::class, function(){
+    return view('resultsGET');
+}]);
