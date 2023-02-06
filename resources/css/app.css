@@ -1,12 +1,13 @@
 .main-background {
-    background: linear-gradient(#0072ff,#00c6ff)
+    background: linear-gradient(#0072ff,#00c6ff);
+    padding-bottom: 50px;
 }
 
 .container.kmw-container {
     background: #fff;
     border-radius: 25px;
     box-shadow: 0 0 10px rgba(0,0,0,.1);
-    margin-bottom: 50px;
+    margin-top: 50px;
     opacity: .9;
     padding: 50px 50px 50px 50px;
 }
@@ -26,7 +27,7 @@
 .navbar-custom .nav-item.active .nav-link,
 .navbar-custom .nav-item:focus .nav-link,
 .navbar-custom .nav-item:hover .nav-link {
-    color: darkgrey;
+    color: lightgrey;
 }
 
 .custom-toggler .navbar-toggler-icon {
@@ -36,10 +37,6 @@
   /* .custom-toggler.navbar-toggler {
     border-color: rgb(255,102,203);
   }  */
-
-.navbar * {
-    color: white !important;
-}
 
 .navbar .kmw-nav-brand {
     font-family: Arizonia;
