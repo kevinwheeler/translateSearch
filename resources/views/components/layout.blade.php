@@ -21,6 +21,8 @@
         {{$headSlot}}
     </head>
     <body>
-        {{$slot}}
+        <div class="main-background">
+          {{$slot}}
+        </div>
     </body>
 </html>

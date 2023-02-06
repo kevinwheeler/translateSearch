@@ -1,4 +1,4 @@
-body {
+.main-background {
     background: linear-gradient(#0072ff,#00c6ff)
 }
 
@@ -9,6 +9,36 @@ body {
     margin-bottom: 50px;
     opacity: .9;
     padding: 50px 50px 50px 50px;
+}
+
+/* change the background color */
+/* .navbar-custom {
+    background-color: #ff5500;
+} */
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text,
+ /* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: white;
+}
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:focus .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: darkgrey;
+}
+
+.custom-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+  
+  /* .custom-toggler.navbar-toggler {
+    border-color: rgb(255,102,203);
+  }  */
+
+.navbar * {
+    color: white !important;
 }
 
 .navbar .kmw-nav-brand {
