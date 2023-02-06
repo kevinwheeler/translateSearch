@@ -2,7 +2,7 @@ body {
     background: linear-gradient(#0072ff,#00c6ff)
 }
 
-.container.kmw-search-form {
+.container.kmw-container {
     background: #fff;
     border-radius: 25px;
     box-shadow: 0 0 10px rgba(0,0,0,.1);
@@ -29,11 +29,9 @@ body {
 .grecaptcha-badge { 
     visibility: hidden;
 }
-
-.spinner-border {
-
+.gResultsContainer {
+    background-color: white;
 }
-
 
 #overlay {
     display:flex;
@@ -47,4 +45,14 @@ body {
     display: none;
     justify-content: center;
     align-items: center;
+}
+
+.kmw-header-label {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.kmw-header-text {
+    color: grey;
+    font-weight: bold;
 }

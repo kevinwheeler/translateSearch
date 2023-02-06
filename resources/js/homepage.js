@@ -14,7 +14,7 @@ for (let i = 0; i < keyAndValueStrings.length; i++) {
 }
 // selectedLanguages should now be a 2d array that looks something ike [["lang1","en"],["lang2","fr"], ...]
 
-function kmwSetForm(languages){
+function kmwSetForm(languages) {
     for (const language of languages){
         let languageCode = language[1];
         document.querySelector(`input[value=${languageCode}]`).checked = true;
@@ -87,7 +87,7 @@ function removeSelectedLanguage(languageCodeToRemove){
     window.location.hash = modelToQueryString();
 }
 
-let checkboxes = document.querySelectorAll("#mainForm > input[type=checkbox]");
+let checkboxes = document.querySelectorAll("#mainForm input[type=checkbox]");
 checkboxes.forEach(function(checkbox){
     checkbox.addEventListener('change', (event) => {
         if (event.currentTarget.checked) {

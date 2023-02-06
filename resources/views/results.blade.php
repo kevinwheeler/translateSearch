@@ -15,15 +15,19 @@
     </x-slot>
 
     <x-navbar :homeUrl="$homeUrl" />
-    @foreach($languagesAndTranslations as $language => $translation)
-      <div class="gResultsContainer">
-        LANGUAGE = {{$language}}
-        QUERY = {{$translation}}
-        <div id="gResults{{$loop->iteration}}" class="gcse-searchresults-only" data-gname="gname{{$loop->iteration}}" data-defaultToImageSearch="true" enableImageSearch="true" defaultToImageSearch="true"></div>
-      </div>
-    @endforeach
+    <main>
+      @foreach($languagesAndTranslations as $language => $translation)
+        <div class="gResultsContainer container kmw-container">
+          <p><span class="kmw-header-label">Language: </span> <span class="kmw-header-text">{{$language}}</span></p>
+          <span class="kmw-header-label">Translation Output: </span> <span class="kmw-header-text">{{$translation}}</span>
+          <div id="gResults{{$loop->iteration}}" class="gcse-searchresults-only" data-gname="gname{{$loop->iteration}}" data-defaultToImageSearch="true" enableImageSearch="true" defaultToImageSearch="true"></div>
+        </div>
+      @endforeach
+    </main>
 
-    {!! $languagesAndTranslations->withQueryString()->links() !!}
+    <div class="container">
+      {!! $languagesAndTranslations->withQueryString()->links() !!}
+    </div>
     <x-pagination-captcha/>
     
   <x-alert-modal/>

@@ -1,4 +1,4 @@
-<div class="container kmw-search-form">
+<div class="container kmw-search-form kmw-container">
 
   <h1>Translate and Search</h1>
   <p class="pl-3">Enter a search query and select target languages below to have the search query translated into each language and bring up the Google Image Search results for each language. Bookmark this page to save your search settings.</p>
@@ -7,7 +7,7 @@
   <form id="mainForm" action="" method="POST">
 
     <div class="form-group">
-        <label for="searchQuery" class="kmw-query-label"> Search Query</label>
+        <label for="queryInput" class="kmw-query-label"> Search Query</label>
         <input type="text" name="query" class="form-control ml-3" id="queryInput" placeholder="Enter search query" minlength="1" maxlength="50">
         <small class="form-text text-muted ml-3">
           Search query length must be 50 characters or less.
