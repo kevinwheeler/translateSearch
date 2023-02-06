@@ -1,0 +1,50 @@
+body {
+    background: linear-gradient(#0072ff,#00c6ff)
+}
+
+.container.kmw-search-form {
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    margin-bottom: 50px;
+    opacity: .9;
+    padding: 50px 50px 50px 50px;
+}
+
+.navbar .kmw-nav-brand {
+    font-family: Arizonia;
+    font-size: 1.5rem;
+    /* font-weight: 700; */
+    color: #fff;
+}
+
+.kmw-query-label, .kmw-target-languages {
+    font-weight: bold;
+}
+
+.container {
+    max-width: 95%;
+}
+
+.grecaptcha-badge { 
+    visibility: hidden;
+}
+
+.spinner-border {
+
+}
+
+
+#overlay {
+    display:flex;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 999;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}

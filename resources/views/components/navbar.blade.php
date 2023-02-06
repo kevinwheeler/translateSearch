@@ -1,8 +1,8 @@
-@props(['homeUrl' => '/hey'])
+@props(['homeUrl' => '/'])
 
 <div class="container">
-  <nav>
-    <a href="{{$homeUrl}}" style="color: blue;font-weight: bold">Home</a>
+  <nav class="navbar">
+    <a class="navbar-brand kmw-nav-brand" href="{{$homeUrl}}">Translate Search</a>
   </nav>
   <br>
 </div>

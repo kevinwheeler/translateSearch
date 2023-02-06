@@ -9,5 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
   </x-slot>
   <x-navbar/>
-  <x-search-form/>
+  <main>
+    <x-search-form/>
+  </main>
 </x-layout>

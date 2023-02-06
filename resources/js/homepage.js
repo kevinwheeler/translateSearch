@@ -51,8 +51,8 @@ window.onSubmit = function(token) {
     // fetch(actionUrl);
     // window.location = actionUrl;
     window.kmwPost(actionUrl, postBodyPameters);
-    // You must return false to prevent the default form behavior
-    return false;
+
+    return false; // I don't think this line does anything
 }
 
 
