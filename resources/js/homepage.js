@@ -3,16 +3,26 @@ if (!window.location.hash){
     window.location.hash = "language0=fr&language1=pl&language2=it&language3=sv&language4=es&language5=pt&language6=zh-CN&language7=zh-TW&language8=ru&language9=bn&language10=hi&language11=ar&language12=ur&language13=id&language14=ja"
 }
 
+let selectedLanguages = [];
+
+function buildModelFromHash(){
+    selectedLanguages = [];
+    let hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+
+    if (hash === "") return;
+
+    // hashVarPairStrings should now be an array that looks something like ["lang23=en", "lang55=fr", ...]
+    let keyAndValueStrings = hash.split('&');
+    for (let i = 0; i < keyAndValueStrings.length; i++) {
+        selectedLanguages[i] = keyAndValueStrings[i].split('=');
+    }
+    // selectedLanguages should now be a 2d array that looks something ike [["lang1","en"],["lang2","fr"], ...]
+}
+
 // On initial page load, build up our model / data structure of which languages are selected
 // and in what order.
-let hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
-// hashVarPairStrings should now be an array that looks something like ["lang23=en", "lang55=fr", ...]
-let keyAndValueStrings = hash.split('&');
-let selectedLanguages = [];
-for (let i = 0; i < keyAndValueStrings.length; i++) {
-    selectedLanguages[i] = keyAndValueStrings[i].split('=');
-}
-// selectedLanguages should now be a 2d array that looks something ike [["lang1","en"],["lang2","fr"], ...]
+buildModelFromHash();
+
 
 function kmwSetForm(languages) {
     for (const language of languages){
@@ -20,6 +30,35 @@ function kmwSetForm(languages) {
         document.querySelector(`input[value=${languageCode}]`).checked = true;
     }
 }
+
+window.addEventListener('hashchange', function(){
+    buildModelFromHash();
+
+    const checkboxes = document.querySelectorAll("#mainForm input[type=checkbox]");
+    checkboxes.forEach(function(checkbox) {
+        checkbox.checked = false;
+    });
+
+    kmwSetForm(selectedLanguages);
+});
+
+//Also clears model and hash
+function clearForm() {
+    const checkboxes = document.querySelectorAll("#mainForm input[type=checkbox]");
+    selectedLanguages = [];
+    window.location.hash = "#";
+    checkboxes.forEach(function(checkbox){
+        checkbox.checked = false;
+    });
+    // document.getElementById('queryInput').value = "";
+
+}
+
+$('#clear-button').on('keypress click', function(e){
+    if (e.which === 13 || e.type === 'click') {
+        clearForm();
+    }
+});
 
 // on initial page load, set up our form to match whatever is in the hash fragment. IE we will
 // check whatever checkboxes / select whatever languages as dictated by the hash fragment.

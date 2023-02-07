@@ -1,6 +1,5 @@
 <?php
 
-#TODO alphabetical order and move to controller
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ResultsController;
 
@@ -23,12 +22,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/feedback', function () {
-    return view('feedback');
-});
-
 Route::get('/about-donate', function () {
     return view('aboutDonate');
+});
+
+
+Route::get('/feedback', function () {
+    return view('feedback');
 });
 
 Route::post('/results', [ResultsController::class, 'index']);
