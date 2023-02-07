@@ -23,6 +23,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/feedback', function () {
+    return view('feedback');
+});
+
+Route::get('/about-donate', function () {
+    return view('aboutDonate');
+});
+
 Route::post('/results', [ResultsController::class, 'index']);
 Route::get('/results', [ResultsController::class, function(){
     return view('resultsGET');

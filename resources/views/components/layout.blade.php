@@ -21,7 +21,7 @@
         {{$headSlot}}
     </head>
     <body>
-        <div class="main-background">
+        <div class="main-background flex-col">
           {{$slot}}
         </div>
     </body>

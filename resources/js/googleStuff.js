@@ -4,7 +4,9 @@ import _ from 'lodash';
 function mutationCallback(mutationList, observer) {
  mutationList.forEach((mutation) => {
    // If a captcha element has been added to the DOM, hide most of the page
-   // except fo the captcha, so the user will see the captcha.
+   // except for the captcha, so the user will see the captcha. Google sends 
+   // a captcha from time to time, and if the user doesn't solve it,
+   // Google will rate limit them.
    if (mutation.target.id === "recaptcha-element") {
      $("nav:last-of-type").hide();
      // $("[id^='gResultsContainer']").hide();

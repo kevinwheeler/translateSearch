@@ -1,6 +1,7 @@
 .main-background {
     background: linear-gradient(#0072ff,#00c6ff);
     padding-bottom: 50px;
+    min-height: 100vh;
 }
 
 .container.kmw-container {
@@ -10,6 +11,15 @@
     margin-top: 50px;
     opacity: .9;
     padding: 50px 50px 50px 50px;
+}
+
+.flex-col {
+    display:flex;
+    flex-direction: column;
+}
+
+.flex-grow {
+    flex-grow: 1;
 }
 
 /* change the background color */

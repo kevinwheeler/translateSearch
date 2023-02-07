@@ -17,7 +17,10 @@
           <a class="nav-link" href="{{$homeUrl}}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/about">About</a>
+          <a class="nav-link" href="/about-donate">About & Donate</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/feedback">Feedback</a>
         </li>
       </ul>
     </div>
