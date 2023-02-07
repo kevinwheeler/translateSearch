@@ -12,6 +12,10 @@
       </script>
       @vite(['resources/js/googleStuff.js'])
       <script defer src="https://cse.google.com/cse.js?cx=c6e7ebcdec9ef45cb"></script>
+
+      <title>Translated Image Search Results</title>
+      <meta name="description" content="Image search results for your translated search query." />
+      <meta name="robots" content="noindex,nofollow">
     </x-slot>
 
     <x-navbar :homeUrl="$homeUrl" />

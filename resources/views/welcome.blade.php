@@ -7,6 +7,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
     @vite(['resources/js/helpers.js','resources/js/homepage.js'])
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+    <title>Image Search Results In Multiple Languages</title>
+    <meta name="description" content="We translate your search phrase into multiple languages and then display the Google image search results for each language." />
   </x-slot>
   <x-navbar/>
   <main>

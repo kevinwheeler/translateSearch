@@ -7,8 +7,13 @@
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script> --}}
       <meta name="csrf-token" content="{{ csrf_token() }}" />
+      
+      <title>Translated Image Search Results</title>
+      <meta name="description" content="Image search results for your translated search query." />
+      <meta name="robots" content="noindex,nofollow">
     </x-slot>
 
+    Your translated image search results will load shortly.
     <x-pagination-captcha/> {{-- TODO rename this component since we aren't using it only in the pagination case --}}
     
   </x-layout>
