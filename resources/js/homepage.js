@@ -21,6 +21,24 @@ function kmwSetForm(languages) {
     }
 }
 
+function clearForm() {
+
+    const checkboxes = document.querySelectorAll("#mainForm input[type=checkbox]");
+    selectedLanguages = [];
+    window.location.hash = "";
+    checkboxes.forEach(function(checkbox){
+        checkbox.checked = false;
+    });
+    // document.getElementById('queryInput').value = "";
+
+}
+
+$('#clear-button').on('keypress click', function(e){
+    if (e.which === 13 || e.type === 'click') {
+        clearForm();
+    }
+});
+
 // on initial page load, set up our form to match whatever is in the hash fragment. IE we will
 // check whatever checkboxes / select whatever languages as dictated by the hash fragment.
 // This is part of the work of implementing the ability for a user to bookmark a page and come 

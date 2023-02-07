@@ -464,7 +464,12 @@
 
     </div>
 
-    <button id="submit-button" class="g-recaptcha btn btn-primary" data-sitekey="6Ld2FkEkAAAAAEhvtS6WWLaBqemOc693wkN6qS0W" data-callback="onSubmit" type="submit">Submit</button>
+    <div class="btn-group mr-2" role="group" aria-label="Submit and Clear Buttons">
+      <button id="submit-button" class="g-recaptcha btn btn-primary" data-sitekey="6Ld2FkEkAAAAAEhvtS6WWLaBqemOc693wkN6qS0W" data-callback="onSubmit" type="submit">Submit</button>
+    </div>
+    <div class="btn-group" role="group" aria-label="Submit and Clear Buttons">
+      <button id="clear-button" class="btn btn-secondary" type="button">Clear</button>
+    </div>
 
     <br>
     <small>This site is protected by reCAPTCHA and the Google 
