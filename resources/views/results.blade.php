@@ -16,6 +16,7 @@
       <title>Translated Image Search Results</title>
       <meta name="description" content="Image search results for your translated search query." />
       <meta name="robots" content="noindex,nofollow">
+      
     </x-slot>
 
     <x-navbar :homeUrl="$homeUrl" />

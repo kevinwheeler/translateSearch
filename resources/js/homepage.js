@@ -1,6 +1,6 @@
 // On initial page load, setup default hash fragment if there isn't one.
 if (!window.location.hash){
-    window.location.hash = 'language1=ar&language2=bn&language3=zh-CN';
+    window.location.hash = "language0=fr&language1=pl&language2=it&language3=sv&language4=es&language5=pt&language6=zh-CN&language7=zh-TW&language8=ru&language9=bn&language10=hi&language11=ar&language12=ur&language13=id&language14=ja"
 }
 
 // On initial page load, build up our model / data structure of which languages are selected

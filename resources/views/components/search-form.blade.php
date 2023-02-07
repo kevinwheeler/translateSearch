@@ -1,7 +1,11 @@
 <div class="container kmw-search-form kmw-container">
 
   <h1>Translate and Search</h1>
-  <p class="pl-3">Enter a search query and select target languages below to have the search query translated into each language and bring up the Google Image Search results for each language. Bookmark this page to save your search settings.</p>
+  <p class="pl-3">
+    Enter a search query and select target languages to have the search query translated into each 
+    language and bring up the Google Image Search results for each language. Bookmark this page to save your search settings.
+    Results will be displayed in the order you check the checkboxes. 
+  </p>
 
 
   <form id="mainForm" action="" method="POST">
