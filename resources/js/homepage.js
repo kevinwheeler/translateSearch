@@ -121,7 +121,8 @@ function removeSelectedLanguage(languageCodeToRemove){
         else return true;
     })
     selectedLanguages.forEach(function(selectedLang, index){
-        selectedLanguages[index] = [`language${index+1}`,selectedLanguages[index][1]];
+        // selectedLanguages[index] = [`language${index}`, selectedLanguages[index][1]];
+        selectedLanguages[index][0] = `language${index}`;
     })
     window.location.hash = modelToQueryString();
 }
