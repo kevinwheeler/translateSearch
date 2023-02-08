@@ -18,6 +18,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class ResultsController extends Controller
 {
 
+    // Removes a querystring parameter from URL
     private function removeParam($url, $param) {
       $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*$/', '', $url);
       $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*&/', '$1', $url);
@@ -26,10 +27,6 @@ class ResultsController extends Controller
 
 
     public function index() {
-      // $validated = Request::validate([
-      //   'query' => 'required|max:50',
-      // ]);
-
       if (!Request::has("g-recaptcha-response") || strlen(Request("g-recaptcha-response")) == 0) {
         dd("wat1");
         return response("User Error: submit recaptcha token", 400);
@@ -38,17 +35,12 @@ class ResultsController extends Controller
 
       $client = new \GuzzleHttp\Client();
 
-      // dd(Request("g-recaptcha-response"));
 
        // Create a POST request
        $response = $client->request(
            'POST',
            'https://www.google.com/recaptcha/api/siteverify',
            [
-              //  'form_params' => [
-              //      'key1' => 'value1',
-              //      'key2' => 'value2'
-              //  ]
               'form_params' => [
                   'secret' => env("RECAPTCHA_SECRET_KEY"),//TODO don't use env()
                   'response' => Request("g-recaptcha-response"),
@@ -60,13 +52,10 @@ class ResultsController extends Controller
        
        // Parse the response object, e.g. read the headers, body, etc.
        $headers = $response->getHeaders();
-      //  $body = $response->getBody();
        $g_response = json_decode($response->getBody());
        if (!$g_response->success) {
         return response("User Error: submit recaptcha token", 400);
        }
-
-
 
 
       if (!Request::has("query") || strlen(Request("query")) > 50 || strlen(Request("query")) < 1) {
@@ -86,17 +75,8 @@ class ResultsController extends Controller
         return false;
       };
 
-      // Should look something like this: ["language1"=>"en", "language2"=>"fr"]
+      // Should look something like this: ["language0"=>"en", "language1=>"fr"]
       $targetLanguageKeyValPairs = array_filter(Request::all(), $validLanguageQueryParamsFilter, ARRAY_FILTER_USE_BOTH);
-
-      // $index = 1;
-      // foreach($targetLanguageKeyValPairs as $key => $val){
-      //   if ($key != ('language' . $index)){
-      //     // We want paramaters in order just in case it's helpful to not have duplicate pages for SEO.
-      //     // We'll probably block these search results pages from getting indexed anyways though, maybe?
-      //     return response("User Error: Please supply language parameters in order. IE language1=x&langauge2=y", 400);
-      //   }
-      // }
 
       //All language codes for the languages the user selected
       $targetLanguageCodes = array_values($targetLanguageKeyValPairs);
@@ -113,20 +93,17 @@ class ResultsController extends Controller
         return response("User Error: Please supply less than 200 output languages", 400);
       }
 
+      $targetLanguageNames = [];
 
-      $filter2 = function($languageCode, $language) use ($targetLanguageCodes) {
-          if (in_array($languageCode, $targetLanguageCodes, true)) {
-            return true;
+      foreach ($targetLanguageCodes as $languageCode) {
+        foreach($possibleLanguageKeyValPairs as $languageName => $languageCode2) {
+          if ($languageCode === $languageCode2) {
+            $targetLanguageNames[] = $languageName;
           }
-          else return false;
-      };
-
-      //All language names for the languages the user selected
-      $targetLanguageNames = array_filter($possibleLanguageKeyValPairs, $filter2, ARRAY_FILTER_USE_BOTH);
-      $targetLanguageNames = array_keys($targetLanguageNames);
+        }
+      }
 
       $translationInputQuery = [Request('query')];
-      // $targetLanguageCodes = ['en', 'fr', 'cs', 'de', 'it', 'ru', 'pl', 'ko', 'ja', 'nl', 'da', 'hr', 'uk', 'sv', 'es', 'no', 'ga', 'is', 'hu', 'he', 'el', 'fi', 'bg', 'ar'];
 
       #pagination example code used from here https://www.youtube.com/watch?v=sAJGyDPXESo
       $currentPage = Paginator::resolveCurrentPage() ?: 1;
@@ -138,6 +115,9 @@ class ResultsController extends Controller
       $currentPageLanguageNames = array_slice($targetLanguageNames, $offset , $itemsPerPage);
       $curlHandles = [];
   
+
+      // In case you want to switch to use Guzzle instead of curl_multi so you can add error handling
+      // Instead of just sending a 500 error, I left this code here that will get you pretty far.
 
       // $client = new Client([
       //   'base_uri' => 'https://translation.googleapis.com/language/translate/v2',
@@ -219,25 +199,6 @@ class ResultsController extends Controller
         curl_multi_exec($mh, $running);
       } while ($running);
 
-      // $res = array();
-      // foreach ($curlHandles as $ch){
-      //   $curlErrorCode = curl_errno($ch);
-      //   if ($curlErrorCode === 0) {
-      //     $info = curl_getinfo($ch);
-      //     $info['url'] = trim($info['url']);
-      //     if ($info['http_code'] == 200) {
-      //         $content = curl_multi_getcontent($ch);
-      //         $res[] = sprintf("#HTTP-OK %0.2f kb returned", strlen($content) / 1024);
-      //     } else {
-      //         // $res[] = "#HTTP-ERROR {$info['http_code'] }  for : {$info['url']}";
-      //         $res[] = curl_multi_getcontent($ch);
-      //     }
-      //   } else {
-      //       $res[] = sprintf("#CURL-ERROR %d: %s ", $curlErrorCode, curl_error($ch));
-      //   }
-      // }
-      // dd($res);
-
       foreach($curlHandles as $ch) {
         curl_multi_remove_handle($mh, $ch);
       }
@@ -247,18 +208,16 @@ class ResultsController extends Controller
       $translations = [];
 
       foreach($curlHandles as $ch) {
-        //TODO add error handling here
+        // TODO add error handling here, except really just move to using Guzzle instead because
+        // error handling with curl_multi is complicated.
         $translations[] = json_decode(curl_multi_getcontent($ch), true)["data"]["translations"][0]["translatedText"];
       }
 
       $languagesAndTranslations = array_combine($currentPageLanguageNames, $translations);
 
       //TODO do I need to close the individual curl handles when using curl multi?
-      // $server_output = curl_exec($ch);
-      // curl_close ($ch);
       $paginator = new LengthAwarePaginator($languagesAndTranslations,count($targetLanguageCodes) ,$itemsPerPage);
       $paginator->withPath('/results');
-      // dd(compact('paginator'));
 
       $queryString = str_replace(Request::url(), '', Request::fullUrl());
       $URL = $this->removeParam($queryString, 'page');
@@ -266,7 +225,6 @@ class ResultsController extends Controller
       $URL = '/' . "#" . substr($URL,1);
 
       return view('results', [
-          // 'translations' => compact('paginator')['translations']
           'languagesAndTranslations' => $paginator,
           'homeUrl' => $URL
       ]);
