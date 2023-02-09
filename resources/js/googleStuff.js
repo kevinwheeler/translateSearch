@@ -1,12 +1,12 @@
 // import './handleGoogleError';
 import _ from 'lodash';
 
+// If a captcha element has been added to the DOM, hide most of the page
+// except for the captcha, so the user will see the captcha. Google sends 
+// a captcha from time to time, and if the user doesn't solve it,
+// Google will rate limit them, so we want the user to see it front and center.
 function mutationCallback(mutationList, observer) {
  mutationList.forEach((mutation) => {
-   // If a captcha element has been added to the DOM, hide most of the page
-   // except for the captcha, so the user will see the captcha. Google sends 
-   // a captcha from time to time, and if the user doesn't solve it,
-   // Google will rate limit them.
    if (mutation.target.id === "recaptcha-element") {
      $("nav:last-of-type").hide();
      // $("[id^='gResultsContainer']").hide();
@@ -24,7 +24,6 @@ observer.observe(elementToObserve, {subtree: true, childList: true});
 //When Google's search fails to load, call this function
 var onGSearchLoadError = _.throttle(function() {
    $("#staticBackdrop").modal("show");
-   // alert("Google search failed to load. Google may be rate limiting you due to too many requests. This can happen when Google sends you a captcha / tells you to prove you are a human and you don't do so.");
  },
  5000, {leading: true, trailing: false}
 );
@@ -58,18 +57,15 @@ const googleInitializationCallback = function() {
  // Each instance of a return value from this function will end up being the
  // search query that our image search uses. This is the one and only place
  // that we set the search query (not counting our el.execute(".") stub query).
- const imageSearchStartingCallback = function(gname, query) {
+ const searchStartingCallback = function(gname, query) {
   var el = google.search.cse.element.getElement(gname);
   //grab the number at the end of the html element's attribute data-gname="gname{x}"
   var elNumber =  gname.replace('gname','');
   elNumber = parseInt(elNumber, 10);
 
-  //change the search query of this google search element to be 
-  // the translation we want to google search
-//*********** *** */
-//   var translations = @json(array_values($languagesAndTranslations->items()));
   return translations[elNumber-1];
-}
+ }
+
  const imageResultsRenderedCallback = function(gname, query) {
   // If we hid these elements while waiting for a user to solve a captcha,
   // go ahead and show them again.
@@ -94,9 +90,6 @@ const googleInitializationCallback = function() {
        }, 1);
    }
 }
-
- // We don't use/need these callbacks, but here they are in case you want to add
- // anything to them.
  const imageResultsReadyCallback = function() {}
  const webSearchStartingCallback = function() {}
  const webResultsReadyCallback = function() {}
@@ -108,14 +101,12 @@ window.__gcse = {
   initializationCallback: googleInitializationCallback,
   searchCallbacks: {
     image: {
-      starting: imageSearchStartingCallback,
+      starting: searchStartingCallback,
       ready: imageResultsReadyCallback,
       rendered: imageResultsRenderedCallback,
     },
-    // We don't use/need these callbacks, but here they are if you want to add
-    // anything to them.
     web: {
-      starting: webSearchStartingCallback,
+      starting: searchStartingCallback,
       ready: webResultsReadyCallback,
       rendered: webResultsRenderedCallback,
     },

@@ -1,6 +1,5 @@
 // JS file for the reults page from a GET request
 window.initiateCaptcha = function(token) {
-    console.log("in after captcha");
     let href = window.location.pathname + window.location.search;
     let postBodyPameters = {
         "g-recaptcha-response": token,
