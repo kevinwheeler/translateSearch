@@ -1,5 +1,15 @@
 <x-layout>
   <x-slot name="headSlot">
+    <style>
+      /* 
+      Fix Google's URL inspector saying the page isn't mobile friendly because clickable items are too close together. 
+      Google's inspector doesn't always load the external Bootstrap CSS file, so we need to add this inline.
+      */
+      .nav-link {
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+      }
+    </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     {{-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> --}}
     <script src="https://www.google.com/recaptcha/api.js" defer></script>
