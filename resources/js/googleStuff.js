@@ -83,11 +83,11 @@ const googleInitializationCallback = function() {
    // that need to be rendered, render the next one.
    if (elNumber < numTranslations) {
     // wait a little bit before rendering the next set of Google Image search results,
-    // so that Google doesn't rate limit us.
+    // so that Google doesn't rate limit us. Not sure this matters.
     setTimeout(function() {
          google.search.cse.element.render({div: "gResults"+nextElNumber, tag: "searchresults-only", gname: "gname"+nextElNumber, attributes:{defaultToImageSearch: true} });
       //  }, 1100);
-       }, 1);
+       }, 500);
    }
 }
  const imageResultsReadyCallback = function() {}
