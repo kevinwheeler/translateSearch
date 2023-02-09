@@ -32,6 +32,6 @@ Route::get('/feedback', function () {
 });
 
 Route::post('/results', [ResultsController::class, 'index']);
-Route::get('/results', [ResultsController::class, function(){
-    return view('resultsGET');
-}]);
+Route::get('/results', function(){
+    return response()->view('resultsGET')->header('Cache-Control', 'no-cache, no-store, must-revalidate');
+});

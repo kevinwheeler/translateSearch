@@ -509,4 +509,10 @@
       document.activeElement.blur();
     }
   });
+
+  window.onbeforeunload = function() {
+    // So that if the user presses the back button and the page is loaded from the back forward cache,
+    // the overlay will not be shown.
+    document.getElementById("overlay").style.display = "none";
+  };
 </script>
