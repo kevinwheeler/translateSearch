@@ -20,8 +20,19 @@ class ResultsController extends Controller
 
     // Removes a querystring parameter from URL
     private function removeParam($url, $param) {
-      $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*$/', '', $url);
-      $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*&/', '$1', $url);
+      //Remove parameter if it's at the end of the URL
+      // Do this in a loop while preg_replace returns a change
+      $pattern = '/(&|\?)'.preg_quote($param).'=[^&]*$/';
+      while (preg_replace($pattern, '', $url) != $url) {
+        $url = preg_replace($pattern, '', $url);
+      }
+
+      //Remove parameter if it's in the middle of the URL
+      $pattern = '/(&|\?)'.preg_quote($param).'=[^&]*&/';
+      while(preg_replace($pattern, '$1', $url) != $url) {
+        $url = preg_replace($pattern, '$1', $url);
+      }
+
       return $url;
     }
 
@@ -217,17 +228,21 @@ class ResultsController extends Controller
 
       //TODO do I need to close the individual curl handles when using curl multi?
       $paginator = new LengthAwarePaginator($languagesAndTranslations,count($targetLanguageCodes) ,$itemsPerPage);
-      $paginator->withPath('/results');
 
-      $queryString = str_replace(Request::url(), '', Request::fullUrl());
+      // Don't use laravel's Request::fullUrl() because it doesn't preserve querystring parameter order.
+      // Beware from a security perspective that ther user is in control of the HTTP_HOST and REQUEST_URI values.
+      $fullUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+      $queryString = str_replace(Request::url(), '', $fullUrl);
       $URL = $this->removeParam($queryString, 'page');
-      $URL = $this->removeParam($queryString, 'query');
-      $URL = '/' . "#" . substr($URL,1);
+      $URL = $this->removeParam($URL, 'query');
+      $URL = $this->removeParam($URL, 'g-recaptcha-response');
 
+      $paginator->withPath('/results/' . $URL);
+
+      $URL = '/' . "#" . substr($URL,1);
       return view('results', [
           'languagesAndTranslations' => $paginator,
           'homeUrl' => $URL
       ]);
-
     }
 }
