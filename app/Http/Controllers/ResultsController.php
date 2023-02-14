@@ -18,6 +18,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class ResultsController extends Controller
 {
 
+    // https://stackoverflow.com/a/20049742/3470632
     // Removes a querystring parameter from URL
     private function removeParam($url, $param) {
       //Remove parameter if it's at the end of the URL
@@ -39,7 +40,6 @@ class ResultsController extends Controller
 
     public function index() {
       if (!Request::has("g-recaptcha-response") || strlen(Request("g-recaptcha-response")) == 0) {
-        dd("wat1");
         return response("User Error: submit recaptcha token", 400);
       }
 
@@ -227,7 +227,8 @@ class ResultsController extends Controller
       $languagesAndTranslations = array_combine($currentPageLanguageNames, $translations);
 
       //TODO do I need to close the individual curl handles when using curl multi?
-      $paginator = new LengthAwarePaginator($languagesAndTranslations,count($targetLanguageCodes) ,$itemsPerPage);
+      $paginator = new LengthAwarePaginator($languagesAndTranslations, count($targetLanguageCodes), $itemsPerPage);
+      $paginator->withPath('/results');
 
       // Don't use laravel's Request::fullUrl() because it doesn't preserve querystring parameter order.
       // Beware from a security perspective that ther user is in control of the HTTP_HOST and REQUEST_URI values.
@@ -237,7 +238,6 @@ class ResultsController extends Controller
       $URL = $this->removeParam($URL, 'query');
       $URL = $this->removeParam($URL, 'g-recaptcha-response');
 
-      $paginator->withPath('/results/' . $URL);
 
       $URL = '/' . "#" . substr($URL,1);
       return view('results', [

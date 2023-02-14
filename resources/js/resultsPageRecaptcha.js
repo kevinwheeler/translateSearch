@@ -1,6 +1,5 @@
 const afterCaptcha = function(token) {
   let href = window.kmwPaginationHref;
-  href += "&g-recaptcha-response=" + token;
   let postBodyPameters = {
       "g-recaptcha-response": token,
       "_token": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
