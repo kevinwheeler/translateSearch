@@ -68,6 +68,7 @@ const googleInitializationCallback = function() {
 
  let gResultsElSizes = {};
 
+ const alreadyRenderedAtLeastOnce = [];
  const imageResultsRenderedCallback = function(gname, query) {
   // If we hid these elements while waiting for a user to solve a captcha,
   // go ahead and show them again.
@@ -78,6 +79,7 @@ const googleInitializationCallback = function() {
 
   var elNumber =  gname.replace('gname','');
   elNumber = parseInt(elNumber, 10);
+
 
 
   let el = document.querySelector(`#gResults${elNumber}`);
@@ -113,10 +115,15 @@ const googleInitializationCallback = function() {
   var nextElNumber = elNumber + 1;
 
   var numTranslations = translations.length;
-  
   // If the image results that just got rendered aren't the last image search results
-  // that need to be rendered, render the next one.
-  if (elNumber < numTranslations) {
+  // that need to be rendered, render the next one. But don't do this if the image 
+  // results that just got rendered have already been rendered once, so that when
+  // user's click the next pagination page of image results, we don't render an
+  // additional search elemente each time.
+  // if (elNumber < numTranslations) {
+  if (elNumber < numTranslations && !alreadyRenderedAtLeastOnce.includes(elNumber)) {
+    alreadyRenderedAtLeastOnce.push(elNumber);
+
    // wait a little bit before rendering the next set of Google Image search results,
    // so that Google doesn't rate limit us. Not sure this matters.
    setTimeout(function() {
