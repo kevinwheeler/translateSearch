@@ -34,5 +34,10 @@
     </div>
     <x-pagination-captcha/>
     
-  <x-alert-modal/>
+    {{-- alert modal seems to be no longer necessary. See alert-modal.blade.php for details }}
+    {{-- 
+      We can delete all of this later. I just wanted to commit some fixes first in case the 
+      alert modal code is ever needed again.
+    }}
+  {{-- <x-alert-modal/> --}}
 </x-layout>

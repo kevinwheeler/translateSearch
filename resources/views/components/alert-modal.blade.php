@@ -1,4 +1,6 @@
-<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <!--  None of this code seems to be necessary anymore. Google seems to send the captcha every time -->
+   <!-- and keep giving you a chance to fill it out instead of just locking you out. -->
+<div class="modal hide fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -23,34 +25,18 @@
   </div>
 </div>
 <script>
-  function mutationCallback(mutationList, observer) {
-   mutationList.forEach((mutation) => {
-     // If a captcha element has been added to the DOM, hide most of the page
-     // except fo the captcha, so the user will see the captcha.
-     if (mutation.target.id === "recaptcha-element") {
-       $("nav:last-of-type").hide();
-       // $("[id^='gResultsContainer']").hide();
-       $(".gResultsContainer").hide();
-       const closestgResultsContainer = mutation.target.closest(".gResultsContainer");
-       $(closestgResultsContainer).show()
-     }
-   });
-  }
   
-  const observer = new MutationObserver(mutationCallback);
-  const elementToObserve = document.querySelector("html");
-  observer.observe(elementToObserve, {subtree: true, childList: true});
-  
-  //When Google's search fails to load, call this function
+  // When Google's search fails to load, call this function
   var onGSearchLoadError = _.throttle(function() {
-      $("#staticBackdrop").modal("show");
-    },
-    5000, {leading: true, trailing: false}
+     $("#staticBackdrop").modal("show");
+     console.log("i should never be in here");
+   },
+   5000, {leading: true, trailing: false}
   );
   
   window.addEventListener('error', ((e) => {
-    if (e.target.src.startsWith("https://cse.google.com")){
-      onGSearchLoadError();
-    }
+   if (e.target.src.startsWith("https://cse.google.com")){
+     onGSearchLoadError();
+   }
   }), true)
 </script>

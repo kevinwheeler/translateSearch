@@ -21,20 +21,6 @@ const observer = new MutationObserver(mutationCallback);
 const elementToObserve = document.querySelector("html");
 observer.observe(elementToObserve, {subtree: true, childList: true});
 
-//When Google's search fails to load, call this function
-var onGSearchLoadError = _.throttle(function() {
-   $("#staticBackdrop").modal("show");
- },
- 5000, {leading: true, trailing: false}
-);
-
-window.addEventListener('error', ((e) => {
- if (e.target.src.startsWith("https://cse.google.com")){
-   onGSearchLoadError();
- }
-}), true)
-
-
 const googleInitializationCallback = function() {
   const initialize = function() {
       google.search.cse.element.render({div: "gResults1", tag: "searchresults-only", gname: "gname1", attributes:{defaultToImageSearch: true, mobileLayout: "forced"} });
